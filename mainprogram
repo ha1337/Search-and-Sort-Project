@@ -1,0 +1,86 @@
+#include <iostream>
+#include <ctime>
+#include "searchSortAlgorithms.h"
+  
+using namespace std; 
+ 
+const int SIZE = 10000; 
+
+void fill(int list[], int size);
+void copyList(int list[], int temp[], int length);
+
+int main()
+{
+	int intlist[SIZE];
+	int temp[SIZE];
+	
+	clock_t startTime1, endTime1;
+	clock_t startTime2, endTime2;
+	clock_t startTime3, endTime3;
+	clock_t startTime4, endTime4;
+	
+	fill(intlist, SIZE);
+
+	copyList(intlist, temp, SIZE);
+
+	//Quick sort: The pivot is the middle element
+	startTime1 = clock();
+	quickSort(intlist, SIZE);		 
+	endTime1 = clock();
+
+	//Quick sort: The pivot is the median element
+	copyList(temp, intlist, SIZE);
+	startTime2 = clock();
+	quickSortMedianPivot(intlist, SIZE);		 
+	endTime2 = clock();
+
+	//Quick sort with insertion sort 
+	//The pivot is the middle element
+	copyList(temp, intlist, SIZE);
+	startTime3 = clock();
+	quickSortWithInsertionSort(intlist, SIZE);		 
+	endTime3 = clock();
+
+	//Quick sort with insertion sort 
+	//The pivot is the median element
+	copyList(temp, intlist, SIZE);
+	startTime4 = clock();
+	quickSortMedianWithInsertionSort(intlist, SIZE);		 
+	endTime4 = clock();
+
+	cout << "Quick sort time, with pivot middle element: "
+		 << endTime1 - startTime1 << endl;
+	cout << "Quick sort time, with pivot median element: "
+		 << endTime2 - startTime2 << endl;
+	cout << "Quick sort and insertion sort time, with pivot "
+		 << "middle element: " << endTime3 - startTime3 << endl;
+	cout << "Quick sort and insertion sort time, with pivot "
+		 << "median element: " << endTime4 - startTime4 << endl;
+	
+	return 0;
+}
+
+void fill(int list[], int size)
+{
+	int seed = 47;
+
+	int multiplier = 2743;
+
+	int addOn = 5923;
+
+    int index = 0;
+
+	while (index < size)
+	{
+	   list[index++] = seed;
+	   seed = int(seed * multiplier + addOn);
+	}
+
+	cout << endl;
+}
+
+void copyList(int list[], int temp[], int length)
+{
+    for (int i = 0; i < length; i++)
+        temp[i] = list[i];
+}
